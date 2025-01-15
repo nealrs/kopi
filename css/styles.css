@@ -1,0 +1,105 @@
+body {
+  width:95%;
+  margin:auto;
+  /*font-family: 'Roboto', sans-serif;*/
+  color: #111111;
+  font-family: "Noto Sans Display", serif;
+  font-optical-sizing: auto;
+  font-weight: 300;
+  font-style: normal;
+  font-variation-settings:
+"wdth" 100;
+}
+
+.sour-gummy {
+  font-family: "Sour Gummy", serif;
+  font-optical-sizing: auto;
+  font-weight: 800;
+  font-style: ExtraBold;
+  font-variation-settings: "wdth" 100;
+  letter-spacing: .35rem;
+}
+  
+.noto-sans {
+  font-family: "Noto Sans Display", serif;
+  font-optical-sizing: auto;
+  font-weight: 100;
+  font-style: normal;
+  font-variation-settings: "wdth" 200;
+}
+
+a {color: #0074D9;}
+a:active, a:hover {color: #B10DC9;}
+
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+img.head{
+  border-radius: 6px;
+  max-height: 90px;
+  vertical-align: middle;
+  /*float: left;*/
+}
+
+hr{
+  border: none;
+  height: 1px;
+  /* Set the hr color */
+  color: #111111;  /* old IE */
+  background-color: #111111;  /* Modern Browsers */
+  margin-top: 1.5rem;
+}
+
+table{
+  text-align:left;
+}
+  
+td, th { /* table cells */
+  padding-right: 1.5rem;
+  padding-bottom: .5rem;
+}
+
+output{
+  vertical-align: middle;
+}
+
+datalist {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  writing-mode: vertical-lr ;
+  width: 100%;
+}
+  
+option {
+  transform: rotate(-90deg);
+  padding-bottom: 2px;
+}
+  
+input[type="range"] {
+  width: 100%;
+  margin: 0;
+}
+
+input[type="radio"] {
+  padding: 0;
+}
+
+.radio_label{
+  padding-right: 6px;
+}
+
+#aero_warning {
+  color: #c31; 
+  display:none;
+}
+.section {
+  /*display: none;*/
+  margin-bottom: 1.5rem;
+}
+
+.nav { text-decoration: none;}
+.right{text-align:right;}

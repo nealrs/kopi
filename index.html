@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Kopimatic &middot; Neal Shyam</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='//fonts.googleapis.com/css?family=Roboto+Slab|Roboto:400,400italic,500|Roboto+Condensed' rel='stylesheet' type='text/css'>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Display:ital,wght@0,100..900;1,100..900&family=Sour+Gummy:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+  </head>
+<body>
+<div class="container">
+  <h1 class="sour-gummy"><img class="head" src="img/head.png"> KOPIMATIC</h1>
+
+  <h3 id="nav">
+    <a id="v60_nav" class="nav" href="#v60">Pourover</a> &middot; 
+    <a id="aero_nav" class="nav" href="#aero">Aeropress</a> &middot; 
+    <a id="drip_nav" class="nav" href="#drip">Drip</a> &middot; 
+    <a id="iced_nav" class="nav" href="#iced">Iced</a>
+  </h3>
+
+  
+  <div id="v60" class="section">
+    <h3>V60 Pourover</h3>
+    <p>How many ounces of coffee we making?</p>
+    <div>
+      <input type="range" min="10" max="17" step="1" list="v60_list" id="v60_oz" value="12" oninput="v60()">
+      <datalist id="v60_list">
+        <option value="10" label="10"></option>
+        <option value="11" label="11"></option>
+        <option value="12" label="12"></option>
+        <option value="13" label="13"></option>
+        <option value="14" label="14"></option>
+        <option value="15" label="15"></option>
+        <option value="16" label="16"></option>
+        <option value="17" label="17"></option>
+      </datalist>
+    </div>
+
+    <p>Grind <strong><span id="v60_beans">22</span></strong> grams of beans at setting <strong>6</strong>.</p>
+    <table>
+      <thead>
+        <tr>
+          <th>Pour</th>
+          <th>Total Water (mL)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Bloom (60s)</td>
+          <td id="v60_stage_0">-</td>
+        </tr>
+        <tr>
+          <td>Stage 1</td>
+          <td id="v60_stage_1">-</td>
+        </tr>
+        <tr>
+          <td>Stage 2</td>
+          <td id="v60_stage_2">-</td>
+        </tr>
+        <tr>
+          <td>Stage 3</td>
+          <td id="v60_stage_3">-</td>
+        </tr>
+        <tr>
+          <td>Stage 4</td>
+          <td id="v60_stage_4">-</td>
+        </tr>
+        <tr>
+          <td>Stage 5</td>
+          <td id="v60_stage_5">-</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  
+  <div id="aero" class="section">
+    <h3>Aeropress</h3>
+    <p>How many mL of coffee we making?</p>
+    <div>
+      <input type="radio" id="aero_vol1" name="aero_ml" value="200" checked  onchange="aero();"/>
+      <label class="radio_label" for="aero_vol1">200</label>
+      <input type="radio" id="aero_vol2" name="aero_ml" value="230" onchange="aero();"/>
+      <label class="radio_label"for="aero_vol2">230</label>
+      <input type="radio" id="aero_vol3" name="aero_ml" value="250" onchange="aero();"/>
+      <label class="radio_label"for="aero_vol3">250</label>
+      <input type="radio" id="aero_vol4" name="aero_ml" value="270" onchange="aero();"/>
+      <label class="radio_label"for="aero_vol4">270 (9oz)</label>
+    </div>
+
+    <p id="aero_warning">⚠️ Travel press is too small for <span id="aero_warning_text"></span> mL!</p>
+
+    <p>Grind <strong><span id="aero_beans">22</span></strong> grams of beans at setting <strong>4</strong>.</p>
+
+    <p><strong>0:00</strong>, fill brewer, stir, cover, &amp; preheat cup</p>
+    <p><strong>2:30</strong>, swirl brewer gently</p>
+    <p><strong>3:00</strong>, empty cup & press for ~60s</p>
+    <p class="right"><a href="#" class="nav">🔝</a></p>
+  </div>
+
+  <div id="drip" class="section">
+    <h3>Drip Coffee Machine</h3>
+    <p>How many ounces of coffee we making?</p>
+    <div>
+      <input type="range" min="3" max="8" step="1" list="drip_list" id="v60_cups" value="3" oninput="drip()">
+      <datalist id="drip_list">
+        <option value="3" label="3"></option>
+        <option value="4" label="4"></option>
+        <option value="5" label="5"></option>
+        <option value="6" label="6"></option>
+        <option value="7" label="7"></option>
+        <option value="8" label="8"></option>
+      </datalist>
+    </div>
+
+    <p>Grind <strong><span id="drip_beans">22</span></strong> grams of beans at setting <strong>5</strong>.</p>
+
+    <div id="drip_instructions"></div>
+    <p class="right"><a href="#" class="nav">🔝</a></p>
+  </div>
+
+  
+  <div id="iced" class="section">
+    <h3>Iced Coffee (Drip / V60)</h3>
+    <p>Grind <strong><span id="iced_beans">33</span></strong> grams of beans at setting <strong>5</strong>(-1) for drip or <strong>6</strong>(-1) for a pourover.</p>
+
+    <p>Put <strong>200</strong> grams of ice in the carafe.</p>
+
+    <p>If you're using the machine:</p>
+    <p>&middot; Pour in <strong>300</strong> mL of water.</p>
+    <p>&middot; Use large wavy filter <em>without</em> grey insert.</p>
+    <p>&middot; Slide basket toggle to the right if you're using the vacuum carafe.</p>
+
+    <p>If you're making a pourover:</p>
+    <table>
+      <thead>
+        <tr>
+          <th>Pour</th>
+          <th>Total Water (mL)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Bloom (60s)</td>
+          <td id="iced_stage_0">100</td>
+        </tr>
+        <tr>
+          <td>Stage 1</td>
+          <td id="iced_stage_1">150</td>
+        </tr>
+        <tr>
+          <td>Stage 2</td>
+          <td id="iced_stage_2">200</td>
+        </tr>
+        <tr>
+          <td>Stage 3</td>
+          <td id="iced_stage_3">250</td>
+        </tr>
+        <tr>
+          <td>Stage 4</td>
+          <td id="iced_stage_4">300</td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="right"><a href="#" class="nav">🔝</a></p>
+  </div>
+
+  <hr>
+  <p>&copy; <a href="https://nealshyam.com" target="_blank">Neal Shyam</a></p>
+</div>
+
+<script>
+  function v60(){
+    const oz = document.getElementById("v60_oz").value;
+    const ml = oz * 29.5735296;
+    const ratio = 16;
+
+    // les calculations
+    const beans = Math.round((ml/ratio),0);
+    const s0 = (Math.round((beans*3) / 10) * 10);
+    const diff = ((ml - s0)/5);
+    const s1 = Math.round((s0 + diff));
+    const s2 = Math.round((s1 + diff));
+    const s3 = Math.round((s2 + diff));
+    const s4 = Math.round((s3 + diff));
+    const s5 = Math.round((s4 + diff));
+
+    // les updates
+    document.getElementById("v60_beans").innerText = beans.toFixed(0);
+    document.getElementById("v60_stage_0").innerText = s0.toFixed(0);
+    document.getElementById("v60_stage_1").innerText = s1.toFixed(0);
+    document.getElementById("v60_stage_2").innerText = s2.toFixed(0);
+    document.getElementById("v60_stage_3").innerText = s3.toFixed(0);
+    document.getElementById("v60_stage_4").innerText = s4.toFixed(0);
+    document.getElementById("v60_stage_5").innerText = s5.toFixed(0);
+
+    console.log(`v60: ${[oz, ml, beans, s0, diff, s1, s2, s3, s4, s5]}`)
+  }
+
+  function aero(){
+    const ml = document.querySelector('input[name="aero_ml"]:checked').value;
+    const ratio = 14;
+
+    // les calculations
+    const beans = Math.round((ml/ratio),0);
+    if (ml > 200){
+      document.getElementById("aero_warning").style.display = 'block';
+    } else{
+      document.getElementById("aero_warning").style.display = 'none';
+    }
+    document.getElementById("aero_warning_text").innerText = ml;
+
+    // les updates
+    document.getElementById("aero_beans").innerText = beans.toFixed(0);
+    console.log(`aero: ${[ml, beans]}`)
+  }
+
+  function drip(){
+    const cups = document.getElementById("v60_cups").value;
+    const ratio = 20;
+
+    // les calculations
+    const ml = 5 * cups * 29.5735296;
+    const beans = Math.round((ml/ratio),0);
+    
+    // les updates
+    document.getElementById("drip_beans").innerText = beans.toFixed(0);
+    if (cups <= 4){
+      document.getElementById("drip_instructions").innerHTML = `<p>Use small wavy filter with grey pourover insert and slide basket toggle to the left.`;
+    } else {
+      document.getElementById("drip_instructions").innerHTML = `<p>Use large wavy filter <em>without</em> grey insert.</p><p>Slide basket toggle to the right if you're using the vacuum carafe.</p>`;
+    }
+  }
+
+  function iced(){
+
+  }
+  // onload, fire the script with defaults?
+  v60();
+  aero();
+  drip();
+  iced();
+
+</script>
+
+</body>
+</html>
