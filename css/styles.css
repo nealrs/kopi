@@ -11,6 +11,13 @@ body {
 "wdth" 100;
 }
 
+p {
+  font-size: 1.1rem;
+}
+table{
+  font-size: 1.2rem;
+}
+
 .sour-gummy {
   font-family: "Sour Gummy", serif;
   font-optical-sizing: auto;
@@ -90,6 +97,8 @@ input[type="radio"] {
 
 .radio_label{
   padding-right: 6px;
+  font-size: 1.2rem;
+  vertical-align: middle;
 }
 
 #aero_warning {
