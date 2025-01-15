@@ -125,7 +125,10 @@ input[type="radio"] {
 }
 
 .nav { text-decoration: none;}
-.right{text-align:right;}
+.right{
+  text-align:right;
+  color: #38220f;
+}
 
 #nav {
   position: sticky; 
