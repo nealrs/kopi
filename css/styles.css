@@ -39,7 +39,7 @@ a {color: #0074D9;}
 a:active, a:hover {color: #B10DC9;}
 
 .container {
-  max-width: 600px;
+  max-width: 500px;
   margin: 0 auto;
   padding: 20px;
 }
@@ -60,7 +60,7 @@ hr{
   margin-top: 1.5rem;
 }
 
-table{
+table {
   text-align:left;
 }
   
@@ -73,13 +73,13 @@ output{
   vertical-align: middle;
 }
 
-datalist {
+/*datalist {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  writing-mode: vertical-lr ;
-  width: 100%;
-}
+  writing-mode: sideways-lr ;
+  width: 80%;
+}*/
   
 option {
   transform: rotate(-90deg);
@@ -87,16 +87,23 @@ option {
 }
   
 input[type="range"] {
-  width: 100%;
+  width: 80%;
   margin: 0;
 }
-
+.range_val{
+  width:20%;
+  font-weight: bold;
+  text-align: right;
+  float:right;
+  font-size: 1.1rem;
+}
 input[type="radio"] {
   padding: 0;
+  vertical-align: middle;
 }
 
 .radio_label{
-  padding-right: 6px;
+  padding-right: 10px;
   font-size: 1.2rem;
   vertical-align: middle;
 }
@@ -112,3 +119,14 @@ input[type="radio"] {
 
 .nav { text-decoration: none;}
 .right{text-align:right;}
+
+#nav {
+  position: sticky; 
+  top: 0; 
+  background-color: white; 
+  z-index: 1000;
+}
+.nav_padding{
+  padding-top: 8px;
+  padding-bottom: 8px;
+}

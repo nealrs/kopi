@@ -2,42 +2,52 @@
 <html>
   <head>
     <meta charset="utf-8">
+    <meta name="description" content="Coffee brewing calculator for V60 pourover, Aeropress, drip, and iced coffee.">
+    <meta name="author" content="Neal Shyam | @nealrs">
     <title>Kopimatic &middot; Neal Shyam</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href='//fonts.googleapis.com/css?family=Roboto+Slab|Roboto:400,400italic,500|Roboto+Condensed' rel='stylesheet' type='text/css'>
-    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Display:ital,wght@0,100..900;1,100..900&family=Sour+Gummy:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css">
+    <link rel="icon" href="img/head.png">
   </head>
 <body>
 <div class="container">
   <h1 class="sour-gummy"><img class="head" src="img/head.png"> KOPIMATIC</h1>
 
-  <h3 id="nav">
+  <div id="nav">
+  <h3 id="nav_links">
     <a id="v60_nav" class="nav" href="#v60">Pourover</a> &middot; 
     <a id="aero_nav" class="nav" href="#aero">Aeropress</a> &middot; 
     <a id="drip_nav" class="nav" href="#drip">Drip</a> &middot; 
     <a id="iced_nav" class="nav" href="#iced">Iced</a>
   </h3>
-
+  </div>
   
   <div id="v60" class="section">
     <h3>V60 Pourover</h3>
-    <p>How many ounces of coffee we making?</p>
+    <p>How much coffee we making?</p>
     <div>
-      <input type="range" min="10" max="17" step="1" list="v60_list" id="v60_oz" value="12" oninput="v60()">
+      <div>
+        <input type="range" min="10" max="17" step="1" list="v60_list" id="v60_oz" value="12" oninput="v60()">
+        <span id="v60_vol" class="range_val">12 oz</span>
+      </div>
       <datalist id="v60_list">
-        <option value="10" label="10"></option>
-        <option value="11" label="11"></option>
-        <option value="12" label="12"></option>
-        <option value="13" label="13"></option>
-        <option value="14" label="14"></option>
-        <option value="15" label="15"></option>
-        <option value="16" label="16"></option>
-        <option value="17" label="17"></option>
+        <option value="10" label="10">10</option>
+        <option value="11" label="11">11</option>
+        <option value="12" label="12">12</option>
+        <option value="13" label="13">13</option>
+        <option value="14" label="14">14</option>
+        <option value="15" label="15">15</option>
+        <option value="16" label="16">16</option>
+        <option value="17" label="17">17</option>
       </datalist>
+    </div>
+    <!--This is some edited AI stuff too for this flexbox nonsense-->
+    <div style="flex: 0 0 80%; display: flex; justify-content: space-between;max-width: 80%;">
+      <span style="margin-right: auto;">10</span>
+      <span style="margin-left: auto;">17</span>
     </div>
 
     <p>Grind <strong><span id="v60_beans">22</span></strong> grams of beans at setting <strong>6</strong>.</p>
@@ -76,7 +86,6 @@
       </tbody>
     </table>
   </div>
-
   
   <div id="aero" class="section">
     <h3>Aeropress</h3>
@@ -104,9 +113,13 @@
 
   <div id="drip" class="section">
     <h3>Drip Coffee Machine</h3>
-    <p>How many ounces of coffee we making?</p>
+    <p>How many 5oz cups of coffee we making?</p>
     <div>
-      <input type="range" min="3" max="8" step="1" list="drip_list" id="v60_cups" value="3" oninput="drip()">
+      <div>
+        <input type="range" min="3" max="8" step="1" list="drip_list" id="v60_cups" value="3" oninput="drip()">
+        <span id="drip_vol" class="range_val">3 cups</span>
+      </div>
+
       <datalist id="drip_list">
         <option value="3" label="3"></option>
         <option value="4" label="4"></option>
@@ -116,16 +129,20 @@
         <option value="8" label="8"></option>
       </datalist>
     </div>
+    <div style="flex: 0 0 80%; display: flex; justify-content: space-between;max-width: 80%;">
+      <span style="margin-right: auto;">3</span>
+      <span style="margin-left: auto;">8</span>
+    </div>
 
     <p>Grind <strong><span id="drip_beans">22</span></strong> grams of beans at setting <strong>5</strong>.</p>
 
     <div id="drip_instructions"></div>
     <p class="right"><a href="#" class="nav">🔝</a></p>
   </div>
-
   
   <div id="iced" class="section">
     <h3>Iced Coffee (Drip / V60)</h3>
+    <p>This recipe makes 500mL of iced coffee.</p>
     <p>Grind <strong><span id="iced_beans">33</span></strong> grams of beans at setting <strong>5</strong>(-1) for drip or <strong>6</strong>(-1) for a pourover.</p>
 
     <p>Put <strong>200</strong> grams of ice in the carafe.</p>
@@ -190,6 +207,7 @@
     const s5 = Math.round((s4 + diff));
 
     // les updates
+    document.getElementById("v60_vol").innerText = `${oz} oz`;
     document.getElementById("v60_beans").innerText = beans.toFixed(0);
     document.getElementById("v60_stage_0").innerText = s0.toFixed(0);
     document.getElementById("v60_stage_1").innerText = s1.toFixed(0);
@@ -198,7 +216,7 @@
     document.getElementById("v60_stage_4").innerText = s4.toFixed(0);
     document.getElementById("v60_stage_5").innerText = s5.toFixed(0);
 
-    console.log(`v60: ${[oz, ml, beans, s0, diff, s1, s2, s3, s4, s5]}`)
+    console.debug(`v60: ${[oz, ml, beans, s0, diff, s1, s2, s3, s4, s5]}`)
   }
 
   function aero(){
@@ -216,7 +234,7 @@
 
     // les updates
     document.getElementById("aero_beans").innerText = beans.toFixed(0);
-    console.log(`aero: ${[ml, beans]}`)
+    console.debug(`aero: ${[ml, beans]}`)
   }
 
   function drip(){
@@ -228,6 +246,7 @@
     const beans = Math.round((ml/ratio),0);
     
     // les updates
+    document.getElementById("drip_vol").innerText = `${cups} cups`;
     document.getElementById("drip_beans").innerText = beans.toFixed(0);
     if (cups <= 4){
       document.getElementById("drip_instructions").innerHTML = `<p>Use small wavy filter with grey pourover insert and slide basket toggle to the left.`;
@@ -239,6 +258,29 @@
   function iced(){
 
   }
+
+  /*This is some (edited) AI shit.*/
+  function isVisible(el) {
+    const rect = el.getBoundingClientRect();
+    return (
+      rect.top < (window.innerHeight || document.documentElement.clientHeight) &&
+      rect.bottom > 0 &&
+      rect.left < (window.innerWidth || document.documentElement.clientWidth) &&
+      rect.right > 0
+    );
+  }
+
+  window.addEventListener('scroll', () => {
+    const img = document.querySelector('img.head');
+    const nav = document.getElementById("nav_links");
+    console.debug('is img visible?', isVisible(img));
+    if (isVisible(img)){
+      nav.classList.remove("nav_padding");
+    } else {
+      nav.classList.add("nav_padding");
+    }
+  });
+
   // onload, fire the script with defaults?
   v60();
   aero();
