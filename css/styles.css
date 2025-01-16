@@ -124,8 +124,11 @@ input[type="radio"] {
   margin-bottom: 1.5rem;
 }
 
-.nav {
+.nav{
   text-decoration: none;
+}
+
+.goTop{
   font-style: ExtraBold !important;
   font-size: 1.5rem;
 }
