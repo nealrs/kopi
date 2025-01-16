@@ -10,6 +10,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Display:ital,wght@0,100..900;1,100..900&family=Sour+Gummy:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/theme.css">
     <link rel="icon" href="img/head.png">
   </head>
 <body>
@@ -108,7 +109,7 @@
     <p><strong>0:00</strong>, fill brewer, stir, cover, &amp; preheat cup</p>
     <p><strong>2:30</strong>, swirl brewer gently</p>
     <p><strong>3:00</strong>, empty cup & press for ~60s</p>
-    <p class="right"><a href="#" class="nav">🔝</a></p>
+    <p class="right"><a href="#" class="nav">&#10548;</a></p>
   </div>
 
   <div id="drip" class="section">
@@ -116,11 +117,12 @@
     <p>How many 5oz cups of coffee we making?</p>
     <div>
       <div>
-        <input type="range" min="3" max="8" step="1" list="drip_list" id="v60_cups" value="3" oninput="drip()">
+        <input type="range" min="2" max="8" step="1" list="drip_list" id="v60_cups" value="3" oninput="drip()">
         <span id="drip_vol" class="range_val">3 cups</span>
       </div>
 
       <datalist id="drip_list">
+        <option value="2" label="2"></option>
         <option value="3" label="3"></option>
         <option value="4" label="4"></option>
         <option value="5" label="5"></option>
@@ -130,19 +132,19 @@
       </datalist>
     </div>
     <div style="flex: 0 0 80%; display: flex; justify-content: space-between;max-width: 80%;">
-      <span style="margin-right: auto;">3</span>
+      <span style="margin-right: auto;">2</span>
       <span style="margin-left: auto;">8</span>
     </div>
 
     <p>Grind <strong><span id="drip_beans">22</span></strong> grams of beans at setting <strong>5</strong>.</p>
 
     <div id="drip_instructions"></div>
-    <p class="right"><a href="#" class="nav">🔝</a></p>
+    <p class="right"><a href="#" class="nav">&#10548;</a></p>
   </div>
   
   <div id="iced" class="section">
     <h3>Iced Coffee (Drip / V60)</h3>
-    <p>This recipe makes 500mL of iced coffee.</p>
+    <p>This recipe makes 500mL of iced coffee, per <a href="https://www.youtube.com/watch?v=PApBycDrPo0" target="_blank">James Hoffman</a>.</p>
     <p>Grind <strong><span id="iced_beans">33</span></strong> grams of beans at setting <strong>5</strong>(-1) for drip or <strong>6</strong>(-1) for a pourover.</p>
 
     <p>Put <strong>200</strong> grams of ice in the carafe.</p>
@@ -183,7 +185,7 @@
         </tr>
       </tbody>
     </table>
-    <p class="right"><a href="#" class="nav">🔝</a></p>
+    <p class="right"><a href="#" class="nav">&#10548;</a></p>
   </div>
 
   <hr>

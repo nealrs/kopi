@@ -124,7 +124,11 @@ input[type="radio"] {
   margin-bottom: 1.5rem;
 }
 
-.nav { text-decoration: none;}
+.nav {
+  text-decoration: none;
+  font-style: ExtraBold !important;
+  font-size: 1.5rem;
+}
 .right{
   text-align:right;
   color: #38220f;
