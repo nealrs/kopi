@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="description" content="Coffee brewing calculator for V60 pourover, AeroPress, drip, and iced coffee.">
     <meta name="author" content="Neal Shyam | @nealrs">
-    <title>Kopimatic &middot; Neal Shyam</title>
+    <title>Kopimatic</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,6 +12,8 @@
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="css/theme.css">
     <link rel="icon" href="img/head.png">
+    <link rel="apple-touch-icon" sizes="128x128" href="img/head.png">
+    
   </head>
 <body>
 <div class="container">
@@ -147,13 +149,14 @@
     <p>This recipe makes 500mL of iced coffee, per <a href="https://www.youtube.com/watch?v=PApBycDrPo0" target="_blank">James Hoffman</a>.</p>
     <p>Grind <strong><span id="iced_beans">33</span></strong> grams of beans at setting <strong>5</strong>(-1) for drip or <strong>6</strong>(-1) for a pourover.</p>
 
-    <p>Put <strong>200</strong> grams of ice in the carafe.</p>
+    <p>Put <strong>200</strong> grams of ice in carafe.</p>
 
     <p>If you're using the machine:</p>
-    <p>&middot; Pour in <strong>300</strong> mL of water.</p>
-    <p>&middot; Use large wavy filter <em>without</em> grey insert.</p>
-    <p>&middot; Slide basket toggle to the right if you're using the vacuum carafe.</p>
-
+    <ul>
+      <li>Pour in <strong>300</strong> mL of water.</li>
+      <li>Use large wavy filter <em>without</em> grey insert.</li>
+      <li>Slide basket toggle to the right for carafe.</li>
+    </ul>
     <p>If you're making a pourover:</p>
     <table>
       <thead>
@@ -262,7 +265,7 @@
     if (cups <= 4){
       document.getElementById("drip_instructions").innerHTML = `<p>Use small wavy filter with grey pourover insert and slide basket toggle to the left.`;
     } else {
-      document.getElementById("drip_instructions").innerHTML = `<p>Use large wavy filter <em>without</em> grey insert.</p><p>Slide basket toggle to the right if you're using the carafe.</p>`;
+      document.getElementById("drip_instructions").innerHTML = `<p>Use large wavy filter <em>without</em> grey insert.</p><p>Slide basket toggle to the right for carafe.</p>`;
     }
   }
 

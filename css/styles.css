@@ -151,3 +151,7 @@ input[type="radio"] {
 ul{
   padding-left: 1.4rem;
 }
+
+li{
+  font-size: 1.1rem;
+}
