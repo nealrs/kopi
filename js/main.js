@@ -66,7 +66,7 @@
 
   }
 
-  /*This is some (edited) AI shit.*/
+  //Everything below this is some (edited) AI shit.
   function isVisible(el) {
     const rect = el.getBoundingClientRect();
     return (
@@ -88,41 +88,56 @@
     }
   });
 
-  // more AI shit, because this is a new function to me. probably could be done shorter.
-  document.addEventListener('DOMContentLoaded', (event) => {
-    const wakeToggle = document.getElementById('wake-toggle');
-    let wakeLock = null;
-
-    async function wakeON() {
-      try {
-        wakeLock = await navigator.wakeLock.request('screen');
-        console.debug('Wake lock ON');
-      } catch (err) {
-        console.debug(`${err.name}, ${err.message}`);
-      }
+  /* wakelock stuff will only work from https */
+  async function wakeOn(){
+    try {
+      window.currentWakeLock = await navigator.wakeLock.request();
+      console.debug('Wake lock ON');
+      console.debug(window.currentWakeLock);
+    } catch (err) {
+      console.debug(`${err.name}, ${err.message}`);
     }
+  }
 
-    function wakeOFF() {
-      if (wakeLock !== null) {
-        wakeLock.release()
-          .then(() => {
-            wakeLock = null;
-            console.debug('Wake lock OFF');
-          });
-      }
+  function wakeOff(){
+    try{
+      window.currentWakeLock.release(); 
+      console.debug('Wake lock OFF');
+      console.debug(window.currentWakeLock);
+    } catch (err){
+      //console.debug(`${err.name}, ${err.message}`);
+      window.currentWakeLock = null;
     }
+  }
 
-    wakeToggle.addEventListener('change', (event) => {
-      if (event.target.checked) {
-        wakeON();
-      } else {
-        wakeOFF();
-      }
+  function wakeToggle(){
+    const toggle = document.querySelector("input[name=wake_toggle]");
+    if (!navigator.wakeLock){
+      //alert("Your device does not support the Wake Lock API. Try on an Android phone or on a device running iOS 16.4 or higher!");    
+      console.debug("Your device does not support the Wake Lock API.");
+      document.getElementById("wake").style.display = 'none';
+      //return;
+    } else if (toggle.checked) {
+      //console.debug("Wake toggle is checked");
+      wakeOn();
+    } else {
+      //console.debug("Wake toggle is not checked");
+      wakeOff();
+    }
+  }
+
+
+  // onload, fire the script with defaults.
+  document.addEventListener('DOMContentLoaded', (event) => {    
+    v60();
+    aero();
+    drip();
+    iced();
+    wakeToggle();
+
+    const toggle = document.querySelector("input[name=wake_toggle]");
+    toggle.addEventListener('change', function() {
+      wakeToggle();
     });
   });
 
-  // onload, fire the script with defaults?
-  v60();
-  aero();
-  drip();
-  iced();
