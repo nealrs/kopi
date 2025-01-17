@@ -46,6 +46,7 @@ a:active, a:hover {color: #967259;}
   max-width: 500px;
   margin: 0 auto;
   padding: 20px;
+  /*scroll-padding-top: 8rem;*/
 }
 
 img.head{
@@ -122,6 +123,7 @@ input[type="radio"] {
 .section {
   /*display: none;*/
   margin-bottom: 1.5rem;
+  scroll-margin-top: 5.3rem; /*enable / update this when you add more stuff to the sticky header*/
 }
 
 .nav{
@@ -153,5 +155,12 @@ ul{
 }
 
 li{
+  font-size: 1.1rem;
+}
+
+#wake{
+  /*text-align:center;
+  margin:auto;*/
+  margin-bottom: -1rem;
   font-size: 1.1rem;
 }
