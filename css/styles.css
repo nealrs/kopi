@@ -9,7 +9,7 @@ body {
   font-style: normal;
   font-variation-settings:
 "wdth" 100;
-background-color: #fffdf5;
+  background-color: #fffdf5;
 }
 
 p {
@@ -162,5 +162,5 @@ li{
   /*text-align:center;
   margin:auto;*/
   margin-bottom: -1rem;
-  font-size: 1.1rem;
+  font-size: 1.2rem;
 }
