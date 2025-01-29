@@ -28,5 +28,39 @@
   "categories": [
     "food",
     "utilities"
-  ]
+  ],
+  "screenshots" : [
+  {
+    "src": "img/screenshots/main.png",
+    "sizes": "1179x2556",
+    "type": "image/png",
+    "form_factor": "narrow",
+    "label": "Brewing options",
+    "platform": "ios"
+  },
+  {
+    "src": "img/screenshots/iced.png",
+    "sizes": "1179x2556",
+    "type": "image/png",
+    "form_factor": "narrow",
+    "label": "Iced coffee calculator",
+    "platform": "ios"
+  },
+  {
+    "src": "img/screenshots/aero.png",
+    "sizes": "1179x2556",
+    "type": "image/png",
+    "form_factor": "narrow",
+    "label": "AeroPress calculator",
+    "platform": "ios"
+  },
+  {
+    "src": "img/screenshots/dark.png",
+    "sizes": "1179x2556",
+    "type": "image/png",
+    "form_factor": "narrow",
+    "label": "Sexy Mocha Dark Mode",
+    "platform": "ios"
+  }
+]
 }
