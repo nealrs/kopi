@@ -1,4 +1,15 @@
-  function v60(){
+/* PWA stuff */
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function() {
+      navigator.serviceWorker.register('service-worker.js').then(function(registration) {
+        console.log('ServiceWorker registration successful with scope: ', registration.scope);
+      }, function(error) {
+        console.log('ServiceWorker registration failed: ', error);
+      });
+    });
+  } 
+ 
+ function v60(){
     const oz = document.getElementById("v60_oz").value;
     const ml = oz * 29.5735296;
     const ratio = 16;

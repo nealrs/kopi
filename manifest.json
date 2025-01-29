@@ -1,0 +1,21 @@
+{
+  "name": "Kopimatic",
+  "short_name": "Kopimatic",
+  "description": "A coffee brewing calculator for V60 pourover, AeroPress, drip, and iced coffee.",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#fffdf5",
+  "theme_color": "#fffdf5",
+  "icons": [
+    {
+      "src": "img/head.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "img/head_orig.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
