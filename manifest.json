@@ -17,5 +17,16 @@
       "sizes": "512x512",
       "type": "image/png"
     }
+  ],
+  "dir": "ltr",
+  "scope": "https://nealrs.github.io/kopi/",
+  "lang": "en",
+  "orientation": "portrait",
+  "display_override": [
+    "window-controls-overlay"
+  ],
+  "categories": [
+    "food",
+    "utilities"
   ]
 }
