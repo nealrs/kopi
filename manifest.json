@@ -1,5 +1,6 @@
 {
   "name": "Kopimatic",
+  "id": "com.nealrs.kopi", 
   "short_name": "Kopimatic",
   "description": "A coffee brewing calculator for V60 pourover, AeroPress, drip, and iced coffee.",
   "start_url": "https://nealrs.github.io/kopi/",
