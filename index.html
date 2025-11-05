@@ -11,14 +11,14 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Display:ital,wght@0,100..900;1,100..900&family=Sour+Gummy:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="css/theme.css">
-    <link rel="icon" href="img/head.png">
-    <link rel="apple-touch-icon" sizes="128x128" href="img/head_orig.png">
+    <link rel="icon" href="img/head2.png">
+    <link rel="apple-touch-icon" sizes="128x128" href="img/head2_orig.png">
     <link rel="manifest" href="manifest.json">
     <meta property="og:title" content="Kopimatic" />
     <meta property="og:type" content="website" />
     <meta name="og:description" content="Neal Shyam's coffee brewing calculator for V60 pourover, AeroPress, drip, and iced coffee.">
     <meta property="og:url" content="https://nealrs.github.io/kopi/" />
-    <meta property="og:image" content="https://nealrs.github.io/kopi/img/head_orig.png" />
+    <meta property="og:image" content="https://nealrs.github.io/kopi/img/head2_orig.png" />
     <meta name="twitter:card" content="summary_large_image">
     <meta name="theme-color" content="#fffdf5" media="(prefers-color-scheme: light)">
     <meta name="theme-color" content="#38220f" media="(prefers-color-scheme: dark)">
@@ -26,7 +26,7 @@
   </head>
 <body>
 <div class="container">
-  <h1 class="sour-gummy"><img class="head" src="img/head.png"> KOPIMATIC</h1>
+  <h1 class="sour-gummy"><img class="head" src="img/head2.png"> KOPIMATIC</h1>
 
   <div id="nav">
     <div id="wake">
@@ -43,7 +43,7 @@
   
   <div id="v60" class="section">
     <h3>V60 Pourover</h3>
-    <p>How much coffee we making?</p>
+    <p>How much coffee you making?</p>
     <div>
       <div>
         <input type="range" min="10" max="17" step="1" list="v60_list" id="v60_oz" value="12" oninput="v60()">
@@ -105,7 +105,7 @@
   
   <div id="aero" class="section">
     <h3>AeroPress</h3>
-    <p>How many mL of coffee we making?</p>
+    <p>How many mL of coffee you making?</p>
     <div>
       <input type="radio" id="aero_vol1" name="aero_ml" value="200" checked  onchange="aero();"/>
       <label class="radio_label" for="aero_vol1">200</label>
@@ -129,7 +129,7 @@
 
   <div id="drip" class="section">
     <h3>Drip Coffee Machine</h3>
-    <p>How many 5oz cups of coffee we making?</p>
+    <p>How many 5oz cups of coffee you making?</p>
     <div>
       <div>
         <input type="range" min="2" max="8" step="1" list="drip_list" id="v60_cups" value="3" oninput="drip()">
