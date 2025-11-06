@@ -1,15 +1,22 @@
+:root{
+  --bg: #fffdf5;
+  --text: #111111;
+  --accent: #38220f;
+}
+
 body {
-  width:95%;
-  margin:auto;
-  /*font-family: 'Roboto', sans-serif;*/
-  color: #111111;
-  font-family: "Noto Sans Display", serif;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 12px; /* comfortable horizontal padding on small screens */
+  color: var(--text);
+  font-family: "Noto Sans Display", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
   font-optical-sizing: auto;
   font-weight: 300;
   font-style: normal;
-  font-variation-settings:
-"wdth" 100;
-  background-color: #fffdf5;
+  font-variation-settings: "wdth" 100;
+  line-height: 1.45;
+  background-color: var(--bg);
+  box-sizing: border-box;
 }
 
 p {
@@ -30,7 +37,7 @@ h1, h3{
   font-variation-settings: "wdth" 100;
   letter-spacing: .35rem;
 }
-  
+
 .noto-sans {
   font-family: "Noto Sans Display", serif;
   font-optical-sizing: auto;
@@ -39,14 +46,76 @@ h1, h3{
   font-variation-settings: "wdth" 200;
 }
 
+/* Headings: use the UI font (Noto) for consistency; Sour Gummy reserved for the logo (H1 with .sour-gummy) */
+h1, h2, h3, h4, h5 {
+  font-family: "Noto Sans Display", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  color: var(--accent);
+  margin-top: 0.6rem;
+  margin-bottom: 0.4rem;
+}
+
+/* Responsive size helpers */
+h1 { font-size: clamp(1.4rem, 4vw, 2.25rem); }
+.section h3 { font-size: clamp(1.15rem, 4vw, 1.5rem); font-weight: 700; letter-spacing: 0.02rem; }
+
 a {color: #38220f;}
 a:active, a:hover {color: #967259;}
 
 .container {
-  max-width: 500px;
+  max-width: 700px; /* comfortable reading width on larger devices */
   margin: 0 auto;
-  padding: 20px;
+  padding: 18px 16px;
+  width: 100%;
+  box-sizing: border-box;
   /*scroll-padding-top: 8rem;*/
+}
+
+/* Header layout: title left, small controls (wake) on the right */
+.site-header {
+  display: flex;
+  align-items: center; /* align logo + title on same baseline */
+  /*justify-content: space-between;*/
+  gap: 4px; /* reduced gap so logo and title sit closer */
+}
+
+.site-header h1 { margin: 0; }
+
+/* Logo and meta columns inside the header */
+.site-logo { flex: 0 0 auto; margin-right: 10px; }
+.site-logo img.head { max-height: 90px !important; }
+.site-meta { display: flex; flex-direction: column; justify-content: flex-start; align-items: flex-start; }
+/* Make the Kopimatic title larger and use the display font */
+.site-meta h1.sour-gummy {
+  font-family: "Sour Gummy", serif;
+  font-weight: 800;
+  letter-spacing: .28rem;
+  margin: 0 0 6px 0;
+  font-size: clamp(1.6rem, 5vw, 2.4rem);
+  line-height: 1;
+}
+.wake-btn { white-space: nowrap; }
+
+.wake-label {
+  font-size: 0.95rem;
+}
+
+/* Button-style wake toggle */
+.wake-btn {
+  -webkit-appearance: none;
+  appearance: none;
+  border: 1px solid rgba(56,34,15,0.12);
+  background: transparent;
+  color: var(--text);
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background 150ms ease, color 150ms ease, border-color 150ms ease;
+}
+.wake-btn.on {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
 }
 
 img.head{
@@ -95,15 +164,16 @@ option {
 }
   
 input[type="range"] {
-  width: 80%;
-  margin: 0;
+  width: 100%;
+  margin: 8px 0 6px;
+  height: 36px; /* increased hit area for touch */
 }
 .range_val{
-  width:20%;
-  font-weight: bold;
-  text-align: right;
-  float:right;
-  font-size: 1.1rem;
+  display: inline-block;
+  width: auto;
+  font-weight: 600;
+  margin-left: 8px;
+  float: none;
 }
 input[type="radio"] {
   padding: 0;
@@ -112,7 +182,7 @@ input[type="radio"] {
 
 .radio_label{
   padding-right: 10px;
-  font-size: 1.2rem;
+  font-size: 1.15rem;
   vertical-align: middle;
 }
 
@@ -121,9 +191,10 @@ input[type="radio"] {
   display:none;
 }
 .section {
-  /*display: none;*/
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.6rem;
   scroll-margin-top: 5.3rem; /*enable / update this when you add more stuff to the sticky header*/
+  border-bottom: 1px solid rgba(56,34,15,0.06);
 }
 
 .nav{
@@ -158,11 +229,75 @@ li{
   font-size: 1.1rem;
 }
 
-#wake{
-  /*text-align:center;
-  margin:auto;*/
+ #wake{
+  /* keep container minimal — button carries the visuals */
   margin-bottom: -1rem;
   font-size: 1.2rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0; /* remove background padding */
+  background: transparent; /* remove subtle gray background */
+  border-radius: 0;
+  margin: 0 0 6px 0;
+}
+
+/* Small-screen tweaks */
+@media (max-width: 420px) {
+  .radio_label { display: block; padding: 8px 0; font-size: 1.05rem; }
+  body { font-weight: 400; }
+  .sour-gummy { letter-spacing: 0.18rem; font-size: clamp(1.6rem, 6vw, 2rem); }
+  /* Make wake smaller on very small screens */
+  #wake { padding: 6px 8px; font-size: 0.95rem; }
+}
+
+/* Range row: ensure slider is left and final measurement/value is right */
+.section > div > div {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.section > div > div input[type="range"] {
+  flex: 1 1 auto;
+  width: auto; /* allow flex to control width */
+}
+.section > div > div .range_val {
+  flex: 0 0 auto;
+  min-width: 48px;
+  text-align: right;
+  font-weight: 700;
+}
+
+/* AeroPress radio group: pill-style buttons that are touch-friendly */
+#aero > div {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-bottom: 8px;
+}
+#aero input[type="radio"] {
+  position: absolute; /* visually hide native radio but keep it accessible */
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+#aero .radio_label {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(56,34,15,0.12);
+  background: transparent;
+  cursor: pointer;
+  user-select: none;
+}
+/* checked state: input directly precedes label in markup so use + */
+#aero input[type="radio"]:checked + .radio_label {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
 }
 
 @media (min-width: 1024px) {

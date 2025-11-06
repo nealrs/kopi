@@ -121,19 +121,27 @@
     }
   }
 
-  function wakeToggle(){
-    const toggle = document.querySelector("input[name=wake_toggle]");
+  // Toggle recipe/wake mode via button
+  async function setRecipeMode(enabled){
+    const btn = document.getElementById('wake_btn');
+    const wakeContainer = document.getElementById('wake');
+    if (!btn) return;
     if (!navigator.wakeLock){
-      //alert("Your device does not support the Wake Lock API. Try on an Android phone or on a device running iOS 16.4 or higher!");    
       console.debug("Your device does not support the Wake Lock API.");
-      document.getElementById("wake").style.display = 'none';
-      //return;
-    } else if (toggle.checked) {
-      //console.debug("Wake toggle is checked");
-      wakeOn();
+      if (wakeContainer) wakeContainer.style.display = 'none';
+      return;
+    }
+
+    if (enabled) {
+      await wakeOn();
+      btn.classList.add('on');
+      btn.textContent = 'Recipe Mode ON';
+      btn.setAttribute('aria-pressed','true');
     } else {
-      //console.debug("Wake toggle is not checked");
       wakeOff();
+      btn.classList.remove('on');
+      btn.textContent = 'Recipe Mode OFF';
+      btn.setAttribute('aria-pressed','false');
     }
   }
 
@@ -144,11 +152,34 @@
     aero();
     drip();
     iced();
-    wakeToggle();
 
-    const toggle = document.querySelector("input[name=wake_toggle]");
-    toggle.addEventListener('change', function() {
-      wakeToggle();
+    const btn = document.getElementById('wake_btn');
+    const wakeContainer = document.getElementById('wake');
+    if (!btn) return;
+    if (!navigator.wakeLock){
+      // Hide control if Wake Lock API not available
+      if (wakeContainer) wakeContainer.style.display = 'none';
+      return;
+    }
+
+    // initialize button state (OFF)
+    btn.classList.remove('on');
+    btn.textContent = 'Recipe Mode OFF';
+    btn.setAttribute('aria-pressed','false');
+
+    btn.addEventListener('click', async function(){
+      const isOn = btn.getAttribute('aria-pressed') === 'true';
+      await setRecipeMode(!isOn);
     });
+  });
+
+  // Re-acquire wake lock when returning to the page if recipe mode was enabled
+  document.addEventListener('visibilitychange', async () => {
+    if (document.visibilityState === 'visible'){
+      const btn = document.getElementById('wake_btn');
+      if (btn && btn.getAttribute('aria-pressed') === 'true'){
+        await wakeOn();
+      }
+    }
   });
 

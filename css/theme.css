@@ -78,4 +78,16 @@
   #nav {
     background-color: #38220f;
   }
+
+  /* Wake button styles for dark theme */
+  #wake .wake-btn {
+    border-color: rgba(255,255,255,0.12);
+    color: #fffdf5;
+    background: transparent;
+  }
+  #wake .wake-btn.on {
+    background: #dbc1ac; /* light accent on dark */
+    color: #38220f;
+    border-color: #dbc1ac;
+  }
 }
