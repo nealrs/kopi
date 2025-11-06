@@ -37,16 +37,9 @@
       </div>
     </div>
   </header>
-  <div id="nav">
-    <h3 id="nav_links">
-      <a id="v60_nav" class="nav" href="#v60">Pourover</a> &middot; 
-      <a id="aero_nav" class="nav" href="#aero">AeroPress</a> &middot; 
-      <a id="drip_nav" class="nav" href="#drip">Drip</a> &middot; 
-      <a id="iced_nav" class="nav" href="#iced">Iced</a>
-    </h3>
-  </div>
+  <!-- navigation removed in favor of mobile tab bar -->
   
-  <div id="v60" class="section">
+  <div id="v60" class="section tab-section" data-tab="v60">
     <h3>V60 Pourover</h3>
     <p>How much coffee you making?</p>
     <div>
@@ -108,7 +101,7 @@
     </table>
   </div>
   
-  <div id="aero" class="section">
+  <div id="aero" class="section tab-section" data-tab="aero">
     <h3>AeroPress</h3>
     <p>How many mL of coffee you making?</p>
     <div>
@@ -129,10 +122,10 @@
     <p><strong>0:00</strong>, fill brewer, stir, cover, &amp; preheat cup</p>
     <p><strong>2:30</strong>, swirl brewer gently</p>
     <p><strong>3:00</strong>, empty cup & press for ~60s</p>
-    <p class="right"><a href="#" class="nav goTop">&#10548;</a></p>
+    
   </div>
 
-  <div id="drip" class="section">
+  <div id="drip" class="section tab-section" data-tab="drip">
     <h3>Drip Coffee Machine</h3>
     <p>How many 5oz cups of coffee you making?</p>
     <div>
@@ -159,24 +152,33 @@
     <p>Grind <strong><span id="drip_beans">22</span></strong> grams of beans at setting <strong>5</strong>.</p>
 
     <div id="drip_instructions"></div>
-    <p class="right"><a href="#" class="nav goTop">&#10548;</a></p>
+    
   </div>
   
-  <div id="iced" class="section">
+  <div id="iced" class="section tab-section" data-tab="iced">
     <h3>Iced Coffee (Drip / V60)</h3>
     <p>This recipe makes 500mL of iced coffee, per <a href="https://www.youtube.com/watch?v=PApBycDrPo0" target="_blank">James Hoffman</a>.</p>
-    <p>Grind <strong><span id="iced_beans">33</span></strong> grams of beans at setting <strong>5</strong>(-1) for drip or <strong>6</strong>(-1) for a pourover.</p>
 
-    <p>Put <strong>200</strong> grams of ice in carafe.</p>
+    <!-- Iced method toggle: choose pourover or drip (moved back above grinding instructions) -->
+    <div class="iced-toggle" role="tablist" aria-label="Iced method">
+      <button class="seg-btn" data-iced="pourover" aria-pressed="true">Pourover</button>
+      <button class="seg-btn" data-iced="drip" aria-pressed="false">Drip</button>
+    </div>
 
-    <p>If you're using the machine:</p>
-    <ul>
-      <li>Pour in <strong>300</strong> mL of water.</li>
-      <li>Use large wavy filter <em>without</em> grey insert.</li>
-      <li>Slide basket toggle to the right for carafe.</li>
-    </ul>
-    <p>If you're making a pourover:</p>
-    <table>
+    <p id="iced_grind_paragraph">Grind <strong><span id="iced_beans">33</span></strong> grams of beans at setting <strong id="iced_grind">6</strong> <span id="iced_grind_note">(pourover)</span>.</p>
+
+    <p>Load <strong>200</strong> grams of ice in carafe.</p>
+
+
+    
+
+    <div class="iced-drip">
+      <p>Pour <strong>300</strong> mL of water into machine.</p>
+      <p>Use large wavy filter <em>without</em> grey insert.</p>
+      <p>Slide basket toggle to the right for carafe.</p>
+    </div>
+    <div class="iced-pourover">
+      <table>
       <thead>
         <tr>
           <th>Pour</th>
@@ -206,19 +208,30 @@
         </tr>
       </tbody>
     </table>
-    <p class="right"><a href="#" class="nav goTop">&#10548;</a></p>
+      </table>
+    </div>
+
   </div>
 
-  <p>These recipes & calculators are designed for my equipment &amp; tastes, <em>YMMV</em>.</p>
-  <ul>
-    <li><a href="https://fellowproducts.com/products/ode-brew-grinder-gen-2" target="_blank">Fellow Ode Gen2</a> grinder</li>
-    <li><a href="https://www.hario-usa.com/products/v60-drip-decanter" target="_blank">Hario v60</a> brewer with glass carafe (1:16)</li>
-    <li><a href="https://cafec-jp.com/products/filterpaper" target="_blank">Cafec Abaca</a> pourover filters</li>
-    <li><a href="https://www.oxo.com/8-cup-coffee-maker.html" target="_blank">Oxo 8 cup</a> drip machine (1:20)</li>
-    <li><a href="https://aeropress.com/products/aeropress-coffee-maker" target="_blank">AeroPress</a> brewer &amp; <a href="https://aeropress.com/products/aeropress-flow-control-filter-cap" target="_blank">filter cap</a> (1:14)</li>
-  </ul>
-  <hr>
-  <p>&copy; <a href="https://nealshyam.com" target="_blank">Neal Shyam</a></p>
+  <div id="about" >
+    <p>Recipes based on my equipment &amp; tastes.</p>
+    <!--<ul>
+      <li><a href="https://fellowproducts.com/products/ode-brew-grinder-gen-2" target="_blank">Fellow Ode Gen2</a> grinder</li>
+      <li><a href="https://www.hario-usa.com/products/v60-drip-decanter" target="_blank">Hario v60</a> brewer with glass carafe (1:16)</li>
+      <li><a href="https://cafec-jp.com/products/filterpaper" target="_blank">Cafec Abaca</a> pourover filters</li>
+      <li><a href="https://www.oxo.com/8-cup-coffee-maker.html" target="_blank">Oxo 8 cup</a> drip machine (1:20)</li>
+      <li><a href="https://aeropress.com/products/aeropress-coffee-maker" target="_blank">AeroPress</a> brewer &amp; <a href="https://aeropress.com/products/aeropress-flow-control-filter-cap" target="_blank">filter cap</a> (1:14)</li>
+    </ul>-->
+    <p>&copy; <a href="https://nealshyam.com" target="_blank">Neal Shyam</a></p>
+  </div>
+  <!-- Mobile tab bar (visible at small viewports) -->
+  <nav class="tabbar" role="tablist" aria-label="Brew methods">
+    <button role="tab" class="tabbtn" data-tab-target="v60" aria-selected="false">Pourover</button>
+    <button role="tab" class="tabbtn" data-tab-target="aero" aria-selected="false">AeroPress</button>
+    <button role="tab" class="tabbtn" data-tab-target="drip" aria-selected="false">Drip</button>
+    <button role="tab" class="tabbtn" data-tab-target="iced" aria-selected="false">Iced</button>
+  </nav>
+  <!--<p>&copy; <a href="https://nealshyam.com" target="_blank">Neal Shyam</a></p>-->
 </div>
 <script src="js/main.js"></script>
 </body>

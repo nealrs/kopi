@@ -221,6 +221,9 @@ input[type="radio"] {
   padding-bottom: 8px;
 }
 
+/* By default hide the mobile tab bar on non-mobile (wider) viewports */
+.tabbar { display: none; }
+
 ul{
   padding-left: 1.4rem;
 }
@@ -304,4 +307,76 @@ li{
   #wake {
     display: none;
   }
+}
+
+/* Mobile tabbed UI: show tabbar and hide non-active sections */
+@media (max-width: 768px) {
+  /* Make the main page a stack of tab sections; only .active shows */
+  .tab-section { display: none; }
+  .tab-section.active { display: block; }
+
+  /* Add bottom padding to container so content isn't hidden behind tabbar */
+  .container { padding-bottom: 80px; }
+
+  .tabbar {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 56px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background: var(--bg);
+    border-top: 1px solid rgba(56,34,15,0.06);
+    z-index: 2000;
+  }
+
+  .tabbar .tabbtn {
+    background: transparent;
+    border: none;
+    padding: 8px 10px;
+    font-size: 0.95rem;
+    color: var(--accent);
+    cursor: pointer;
+  }
+
+  .tabbar .tabbtn[aria-selected="true"] {
+    color: #fff;
+    background: var(--accent);
+    padding: 8px 12px;
+    border-radius: 999px;
+  }
+}
+
+/* Accessibility: focus styles for tab buttons */
+.tabbar .tabbtn:focus { outline: 3px solid rgba(56,34,15,0.12); outline-offset: 3px; border-radius: 8px; }
+
+/* Iced method segmented control */
+.iced-toggle{
+  display: inline-flex;
+  gap: 6px;
+  margin: 8px 0 10px;
+}
+.iced-toggle .seg-btn{
+  -webkit-appearance: none;
+  appearance: none;
+  border: 1px solid rgba(56,34,15,0.12);
+  background: transparent;
+  padding: 6px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  color: var(--accent);
+}
+.iced-toggle .seg-btn[aria-pressed="true"]{
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+
+/* Hide/show iced variants */
+.iced-drip { display: block; }
+.iced-pourover { display: block; }
+@media (max-width: 768px){
+  /* on mobile, we'll still control visibility via .active on sections */
 }

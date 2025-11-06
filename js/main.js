@@ -171,6 +171,10 @@
       const isOn = btn.getAttribute('aria-pressed') === 'true';
       await setRecipeMode(!isOn);
     });
+
+    // Initialize mobile tab UI if present
+    initTabs();
+    initIcedToggle();
   });
 
   // Re-acquire wake lock when returning to the page if recipe mode was enabled
@@ -182,4 +186,115 @@
       }
     }
   });
+
+  // --- Mobile tab UI functions ---
+  function activateTab(name){
+    const sections = document.querySelectorAll('.tab-section');
+    sections.forEach(s => {
+      if (s.dataset.tab === name) s.classList.add('active'); else s.classList.remove('active');
+    });
+    const buttons = document.querySelectorAll('.tabbar .tabbtn');
+    buttons.forEach(b => {
+      if (b.dataset.tabTarget === name) b.setAttribute('aria-selected','true'); else b.setAttribute('aria-selected','false');
+    });
+    // update hash without scrolling
+    try{ history.replaceState(null, '', '#'+name); } catch(e){ /* ignore */ }
+    // run any init for the visible section (so ranges update)
+    if (name === 'v60') v60();
+    if (name === 'aero') aero();
+    if (name === 'drip') drip();
+    if (name === 'iced') iced();
+    // focus a logical control for keyboard users
+    const target = document.querySelector(`.tab-section[data-tab="${name}"]`);
+    if (target) focusFirstIn(target);
+  }
+
+  function runSectionInit(name){
+    if (name === 'v60') v60();
+    if (name === 'aero') aero();
+    if (name === 'drip') drip();
+    if (name === 'iced') iced();
+  }
+
+  function focusFirstIn(section){
+    if (!section) return;
+    const focusable = section.querySelector('input, button, select, textarea, a[href], [tabindex]:not([tabindex="-1"])');
+    if (focusable && typeof focusable.focus === 'function'){
+      try{ focusable.focus({preventScroll: true}); } catch(e){ focusable.focus(); }
+    }
+  }
+
+  // Wire up the iced segmented control (Pourover vs Drip)
+  function initIcedToggle(){
+    const icedSection = document.querySelector('.tab-section[data-tab="iced"]');
+    if (!icedSection) return;
+  const seg = icedSection.querySelector('.iced-toggle');
+  if (!seg) return;
+  const buttons = Array.from(seg.querySelectorAll('.seg-btn'));
+    const icedGrindEl = icedSection.querySelector('#iced_grind');
+    const icedNoteEl = icedSection.querySelector('#iced_grind_note');
+    const showPourover = () => {
+      icedSection.querySelectorAll('.iced-pourover').forEach(el => el.style.display = 'block');
+      icedSection.querySelectorAll('.iced-drip').forEach(el => el.style.display = 'none');
+      if (icedGrindEl) icedGrindEl.textContent = '6';
+      if (icedNoteEl) icedNoteEl.textContent = '(pourover)';
+      buttons.forEach(b => b.setAttribute('aria-pressed', b.dataset.iced === 'pourover' ? 'true' : 'false'));
+    };
+    const showDrip = () => {
+      icedSection.querySelectorAll('.iced-pourover').forEach(el => el.style.display = 'none');
+      icedSection.querySelectorAll('.iced-drip').forEach(el => el.style.display = 'block');
+      if (icedGrindEl) icedGrindEl.textContent = '5';
+      if (icedNoteEl) icedNoteEl.textContent = '(drip)';
+      buttons.forEach(b => b.setAttribute('aria-pressed', b.dataset.iced === 'drip' ? 'true' : 'false'));
+    };
+
+    buttons.forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const which = btn.dataset.iced;
+        if (which === 'pourover') showPourover(); else showDrip();
+      });
+      btn.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' '){
+          e.preventDefault();
+          const which = btn.dataset.iced;
+          if (which === 'pourover') showPourover(); else showDrip();
+        }
+      });
+    });
+
+    // default state: pourover
+    showPourover();
+  }
+
+  function initTabs(){
+    const tabbar = document.querySelector('.tabbar');
+    if (!tabbar) return;
+    const buttons = Array.from(tabbar.querySelectorAll('.tabbtn'));
+    buttons.forEach((btn, idx) => {
+      btn.addEventListener('click', () => {
+        activateTab(btn.dataset.tabTarget);
+        // ensure top of container is visible when switching
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+      // keyboard nav: left/right to move between tabs
+      btn.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight' || e.key === 'ArrowLeft'){
+          e.preventDefault();
+          const dir = e.key === 'ArrowRight' ? 1 : -1;
+          const next = (idx + dir + buttons.length) % buttons.length;
+          buttons[next].focus();
+          // do not auto-activate on focus move; require Enter/Space or ArrowLeft/Right to activate
+        } else if (e.key === 'Enter' || e.key === ' '){
+          e.preventDefault();
+          activateTab(btn.dataset.tabTarget);
+        }
+      });
+    });
+
+    // choose initial tab from hash or default to v60
+    const hash = (location.hash || '').replace('#','');
+    const initial = hash || 'v60';
+  // Activate initial without animation
+    activateTab(initial);
+  }
 
