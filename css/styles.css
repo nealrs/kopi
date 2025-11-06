@@ -252,6 +252,8 @@ li{
   .sour-gummy { letter-spacing: 0.18rem; font-size: clamp(1.6rem, 6vw, 2rem); }
   /* Make wake smaller on very small screens */
   #wake { padding: 6px 8px; font-size: 0.95rem; }
+  /* Keep iced toggle size consistent with AeroPress radios on very small screens */
+  .iced-toggle .seg-btn { font-size: 1.05rem; }
 }
 
 /* Range row: ensure slider is left and final measurement/value is right */
@@ -364,9 +366,10 @@ li{
   border: 1px solid rgba(56,34,15,0.12);
   background: transparent;
   padding: 6px 10px;
-  border-radius: 8px;
+  border-radius: 999px;
   cursor: pointer;
   color: var(--accent);
+  font-size: 1.15rem;
 }
 .iced-toggle .seg-btn[aria-pressed="true"]{
   background: var(--accent);
@@ -374,9 +377,12 @@ li{
   border-color: var(--accent);
 }
 
-/* Hide/show iced variants */
-.iced-drip { display: block; }
-.iced-pourover { display: block; }
+/* Hide/show iced variants by parent state (class toggles) */
+.iced-drip, .iced-pourover { display: none; }
+#iced.iced--pourover .iced-pourover { display: block; }
+#iced.iced--pourover .iced-drip { display: none; }
+#iced.iced--drip .iced-drip { display: block; }
+#iced.iced--drip .iced-pourover { display: none; }
 @media (max-width: 768px){
   /* on mobile, we'll still control visibility via .active on sections */
 }

@@ -234,15 +234,15 @@
     const icedGrindEl = icedSection.querySelector('#iced_grind');
     const icedNoteEl = icedSection.querySelector('#iced_grind_note');
     const showPourover = () => {
-      icedSection.querySelectorAll('.iced-pourover').forEach(el => el.style.display = 'block');
-      icedSection.querySelectorAll('.iced-drip').forEach(el => el.style.display = 'none');
+      icedSection.classList.add('iced--pourover');
+      icedSection.classList.remove('iced--drip');
       if (icedGrindEl) icedGrindEl.textContent = '6';
       if (icedNoteEl) icedNoteEl.textContent = '(pourover)';
       buttons.forEach(b => b.setAttribute('aria-pressed', b.dataset.iced === 'pourover' ? 'true' : 'false'));
     };
     const showDrip = () => {
-      icedSection.querySelectorAll('.iced-pourover').forEach(el => el.style.display = 'none');
-      icedSection.querySelectorAll('.iced-drip').forEach(el => el.style.display = 'block');
+      icedSection.classList.add('iced--drip');
+      icedSection.classList.remove('iced--pourover');
       if (icedGrindEl) icedGrindEl.textContent = '5';
       if (icedNoteEl) icedNoteEl.textContent = '(drip)';
       buttons.forEach(b => b.setAttribute('aria-pressed', b.dataset.iced === 'drip' ? 'true' : 'false'));
