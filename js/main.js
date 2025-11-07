@@ -137,11 +137,13 @@
       btn.classList.add('on');
       btn.textContent = 'Recipe Mode ON';
       btn.setAttribute('aria-pressed','true');
+      try{ localStorage.setItem('kopi.recipeMode','true'); } catch(e){/* ignore */}
     } else {
       wakeOff();
       btn.classList.remove('on');
       btn.textContent = 'Recipe Mode OFF';
       btn.setAttribute('aria-pressed','false');
+      try{ localStorage.setItem('kopi.recipeMode','false'); } catch(e){/* ignore */}
     }
   }
 
@@ -155,24 +157,30 @@
 
     const btn = document.getElementById('wake_btn');
     const wakeContainer = document.getElementById('wake');
-    if (!btn) return;
-    if (!navigator.wakeLock){
+    // If button exists, wire it up; otherwise continue (wake lock optional)
+    if (btn) {
       // Hide control if Wake Lock API not available
-      if (wakeContainer) wakeContainer.style.display = 'none';
-      return;
+      if (!navigator.wakeLock){ if (wakeContainer) wakeContainer.style.display = 'none'; }
+
+      // initialize button state based on saved preference (default OFF)
+      const saved = (function(){ try{ return localStorage.getItem('kopi.recipeMode'); } catch(e){ return null; }})();
+      const startOn = saved === 'true';
+      if (startOn) {
+        // best-effort: try to enable wake lock, but don't block init if it fails
+        setRecipeMode(true).catch(()=>{});
+      } else {
+        btn.classList.remove('on');
+        btn.textContent = 'Recipe Mode OFF';
+        btn.setAttribute('aria-pressed','false');
+      }
+
+      btn.addEventListener('click', async function(){
+        const isOn = btn.getAttribute('aria-pressed') === 'true';
+        await setRecipeMode(!isOn);
+      });
     }
 
-    // initialize button state (OFF)
-    btn.classList.remove('on');
-    btn.textContent = 'Recipe Mode OFF';
-    btn.setAttribute('aria-pressed','false');
-
-    btn.addEventListener('click', async function(){
-      const isOn = btn.getAttribute('aria-pressed') === 'true';
-      await setRecipeMode(!isOn);
-    });
-
-    // Initialize mobile tab UI if present
+    // Initialize mobile tab UI and iced toggle
     initTabs();
     initIcedToggle();
   });
@@ -199,6 +207,7 @@
     });
     // update hash without scrolling
     try{ history.replaceState(null, '', '#'+name); } catch(e){ /* ignore */ }
+    try{ localStorage.setItem('kopi.lastTab', name); } catch(e){ /* ignore */ }
     // run any init for the visible section (so ranges update)
     if (name === 'v60') v60();
     if (name === 'aero') aero();
@@ -239,6 +248,7 @@
       if (icedGrindEl) icedGrindEl.textContent = '6';
       if (icedNoteEl) icedNoteEl.textContent = '(pourover)';
       buttons.forEach(b => b.setAttribute('aria-pressed', b.dataset.iced === 'pourover' ? 'true' : 'false'));
+      try{ localStorage.setItem('kopi.icedMethod','pourover'); } catch(e){/* ignore */}
     };
     const showDrip = () => {
       icedSection.classList.add('iced--drip');
@@ -246,6 +256,7 @@
       if (icedGrindEl) icedGrindEl.textContent = '5';
       if (icedNoteEl) icedNoteEl.textContent = '(drip)';
       buttons.forEach(b => b.setAttribute('aria-pressed', b.dataset.iced === 'drip' ? 'true' : 'false'));
+      try{ localStorage.setItem('kopi.icedMethod','drip'); } catch(e){/* ignore */}
     };
 
     buttons.forEach(btn => {
@@ -262,8 +273,9 @@
       });
     });
 
-    // default state: pourover
-    showPourover();
+    // default state: restore from localStorage or pourover
+    const saved = (function(){ try{ return localStorage.getItem('kopi.icedMethod'); } catch(e){ return null; }})();
+    if (saved === 'drip') showDrip(); else showPourover();
   }
 
   function initTabs(){
@@ -293,8 +305,9 @@
 
     // choose initial tab from hash or default to v60
     const hash = (location.hash || '').replace('#','');
-    const initial = hash || 'v60';
-  // Activate initial without animation
+    const saved = (function(){ try{ return localStorage.getItem('kopi.lastTab'); } catch(e){ return null; }})();
+    const initial = saved || hash || 'v60';
+    // Activate initial without animation
     activateTab(initial);
   }
 

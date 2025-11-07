@@ -37,57 +37,52 @@
   }
 }
 @media (prefers-color-scheme: dark) {
+  /* dark-mode variables */
+  :root {
+    --bg: #38220f; /* brown background as requested */
+    --text: #fffdf5; /* light text */
+    --accent: #dbc1ac; /* light tan accent for buttons */
+    --accent-foreground: #38220f; /* dark text on light accent in dark mode */
+    --accent-hover: #e6d0ba;
+    --input-bg: rgba(255,255,255,0.04);
+    --muted: rgba(255,255,255,0.12);
+  --section-border: rgba(255,255,255,0.14);
+    --selected-shadow: 0 2px 8px rgba(0,0,0,0.36);
+  }
+
   body {
-    color: #fffdf5;
-  background-color: #38220f;
+    color: var(--text);
+    background-color: var(--bg);
   }
-  
-  h1, h3{
-    color: #fffdf5;;
-  }
-  
-  a {color: #fffdf5;}
-  a:active, a:hover {color: #dbc1ac;}
-  
-  hr{
-    color: #fffdf5;  /* old IE */
-    background-color: #fffdf5;  /* Modern Browsers */
-  }
-  
+
+  h1, h3{ color: var(--text); }
+
+  a { color: var(--accent); }
+  a:active, a:hover { color: #e6d0ba; }
+
+  hr{ background-color: rgba(255,255,255,0.06); }
+
   input{
-    color: #fffdf5;
-    background-color: #fffdf5;
+    color: var(--text);
+    background-color: var(--input-bg);
   }
 
-  th{
-    color: #fffdf5;
-  }
-  
-  #aero_warning {
-    color: #ff9966; 
-  }
-  .section {
-    /*display: none;*/
-    margin-bottom: 1.5rem;
-  }
-  
-  .right{
-    color: #fffdf5;
-  }
-  
-  #nav {
-    background-color: #38220f;
-  }
+  th{ color: var(--text); }
 
-  /* Wake button styles for dark theme */
+  #aero_warning { color: #ff9966; }
+  .section { margin-bottom: 1.5rem; }
+  .right{ color: var(--text); }
+  #nav { background-color: var(--bg); }
+
+  /* Wake button styles for dark theme (use accent variable) */
   #wake .wake-btn {
-    border-color: rgba(255,255,255,0.12);
-    color: #fffdf5;
+    border-color: var(--muted);
+    color: var(--text);
     background: transparent;
   }
   #wake .wake-btn.on {
-    background: #dbc1ac; /* light accent on dark */
-    color: #38220f;
-    border-color: #dbc1ac;
+    background: var(--accent);
+    color: var(--accent-foreground);
+    border-color: var(--accent);
   }
 }

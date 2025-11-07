@@ -2,6 +2,11 @@
   --bg: #fffdf5;
   --text: #111111;
   --accent: #38220f;
+  --muted: rgba(56,34,15,0.12);
+  --accent-foreground: #fff;
+  --accent-hover: #967259;
+  --section-border: rgba(56,34,15,0.06);
+  --selected-shadow: 0 2px 6px rgba(0,0,0,0.08);
 }
 
 body {
@@ -27,7 +32,7 @@ table{
 }
 
 h1, h3{
-  color: #38220f;
+  color: var(--accent);
 }
 .sour-gummy {
   font-family: "Sour Gummy", serif;
@@ -58,8 +63,8 @@ h1, h2, h3, h4, h5 {
 h1 { font-size: clamp(1.4rem, 4vw, 2.25rem); }
 .section h3 { font-size: clamp(1.15rem, 4vw, 1.5rem); font-weight: 700; letter-spacing: 0.02rem; }
 
-a {color: #38220f;}
-a:active, a:hover {color: #967259;}
+a { color: var(--accent); }
+a:active, a:hover { color: var(--accent-hover); }
 
 .container {
   max-width: 700px; /* comfortable reading width on larger devices */
@@ -103,7 +108,7 @@ a:active, a:hover {color: #967259;}
 .wake-btn {
   -webkit-appearance: none;
   appearance: none;
-  border: 1px solid rgba(56,34,15,0.12);
+  border: 1px solid var(--muted);
   background: transparent;
   color: var(--text);
   padding: 8px 12px;
@@ -114,7 +119,7 @@ a:active, a:hover {color: #967259;}
 }
 .wake-btn.on {
   background: var(--accent);
-  color: #fff;
+  color: var(--accent-foreground);
   border-color: var(--accent);
 }
 
@@ -128,9 +133,8 @@ img.head{
 hr{
   border: none;
   height: 1px;
-  /* Set the hr color */
-  color: #111111;  /* old IE */
-  background-color: #111111;  /* Modern Browsers */
+  /* Set the hr color via variable so dark theme can override */
+  background-color: var(--muted);
   margin-top: 1.5rem;
 }
 
@@ -142,9 +146,7 @@ td, th { /* table cells */
   padding-right: 1.5rem;
   padding-bottom: .5rem;
 }
-th{
-  color: #38220f;
-}
+th{ color: var(--accent); }
 
 output{
   vertical-align: middle;
@@ -194,7 +196,7 @@ input[type="radio"] {
   margin-bottom: 1.25rem;
   padding-bottom: 0.6rem;
   scroll-margin-top: 5.3rem; /*enable / update this when you add more stuff to the sticky header*/
-  border-bottom: 1px solid rgba(56,34,15,0.06);
+  border-bottom: 1px solid var(--section-border);
 }
 
 .nav{
@@ -207,13 +209,13 @@ input[type="radio"] {
 }
 .right{
   text-align:right;
-  color: #38220f;
+  color: var(--accent);
 }
 
 #nav {
   position: sticky; 
   top: 0; 
-  background-color: #fffdf5; 
+  background-color: var(--bg); 
   z-index: 1000;
 }
 .nav_padding{
@@ -293,16 +295,27 @@ li{
   justify-content: center;
   padding: 8px 12px;
   border-radius: 999px;
-  border: 1px solid rgba(56,34,15,0.12);
+  border: 1px solid var(--muted);
   background: transparent;
   cursor: pointer;
   user-select: none;
+  transition: background 140ms ease, color 140ms ease, border-color 140ms ease;
+  will-change: transform;
+}
+/* Make unselected aero radio labels visually distinct and keyboard-focusable */
+#aero input[type="radio"] + .radio_label {
+  color: var(--text);
+}
+#aero input[type="radio"]:focus-visible + .radio_label {
+  outline: 3px solid var(--muted);
+  outline-offset: 3px;
 }
 /* checked state: input directly precedes label in markup so use + */
 #aero input[type="radio"]:checked + .radio_label {
   background: var(--accent);
-  color: #fff;
+  color: var(--accent-foreground);
   border-color: var(--accent);
+  box-shadow: var(--selected-shadow);
 }
 
 @media (min-width: 1024px) {
@@ -330,7 +343,7 @@ li{
     justify-content: space-around;
     align-items: center;
     background: var(--bg);
-    border-top: 1px solid rgba(56,34,15,0.06);
+  border-top: 1px solid var(--section-border);
     z-index: 2000;
   }
 
@@ -344,15 +357,17 @@ li{
   }
 
   .tabbar .tabbtn[aria-selected="true"] {
-    color: #fff;
+    color: var(--accent-foreground);
     background: var(--accent);
     padding: 8px 12px;
     border-radius: 999px;
+    box-shadow: var(--selected-shadow);
   }
+  .hide-mobile { display: none; }
 }
 
 /* Accessibility: focus styles for tab buttons */
-.tabbar .tabbtn:focus { outline: 3px solid rgba(56,34,15,0.12); outline-offset: 3px; border-radius: 8px; }
+.tabbar .tabbtn:focus { outline: 3px solid var(--muted); outline-offset: 3px; border-radius: 8px; }
 
 /* Iced method segmented control */
 .iced-toggle{
@@ -363,19 +378,28 @@ li{
 .iced-toggle .seg-btn{
   -webkit-appearance: none;
   appearance: none;
-  border: 1px solid rgba(56,34,15,0.12);
+  border: 1px solid var(--muted);
   background: transparent;
   padding: 6px 10px;
   border-radius: 999px;
   cursor: pointer;
-  color: var(--accent);
+  color: var(--text);
   font-size: 1.15rem;
+  transition: background 140ms ease, color 140ms ease, border-color 140ms ease, transform 120ms ease;
+  will-change: transform;
 }
+.iced-toggle .seg-btn:hover{ border-color: var(--accent); color: var(--accent); }
+.iced-toggle .seg-btn:focus-visible{ outline: 3px solid var(--muted); outline-offset: 3px; }
 .iced-toggle .seg-btn[aria-pressed="true"]{
   background: var(--accent);
-  color: #fff;
+  color: var(--accent-foreground);
   border-color: var(--accent);
+  box-shadow: var(--selected-shadow);
 }
+
+.tabbar .tabbtn:active,
+.iced-toggle .seg-btn:active,
+#aero .radio_label:active { transform: scale(0.98); }
 
 /* Hide/show iced variants by parent state (class toggles) */
 .iced-drip, .iced-pourover { display: none; }
@@ -385,4 +409,15 @@ li{
 #iced.iced--drip .iced-pourover { display: none; }
 @media (max-width: 768px){
   /* on mobile, we'll still control visibility via .active on sections */
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .iced-toggle .seg-btn,
+  #aero .radio_label,
+  .tabbar .tabbtn {
+    transition: none !important;
+  }
+  .tabbar .tabbtn:active,
+  .iced-toggle .seg-btn:active,
+  #aero .radio_label:active { transform: none !important; }
 }
