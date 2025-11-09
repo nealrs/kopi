@@ -196,7 +196,7 @@ input[type="radio"] {
   margin-bottom: 1.25rem;
   padding-bottom: 0.6rem;
   scroll-margin-top: 5.3rem; /*enable / update this when you add more stuff to the sticky header*/
-  border-bottom: 1px solid var(--section-border);
+  /*border-bottom: 1px solid var(--section-border);*/
 }
 
 .nav{
@@ -346,6 +346,65 @@ li{
   border-top: 1px solid var(--section-border);
     z-index: 2000;
   }
+
+  /* Stopwatch UI: fixed just above the tabbar, full-bleed like the tabbar */
+  .stopwatch {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 56px; /* sits above the tabbar (which is 56px high) */
+    display: flex;
+    justify-content: center;
+    z-index: 2100;
+    pointer-events: none; /* inner controls will accept pointer-events */
+    background: var(--bg);
+    /* no border on the full-width container */
+  }
+  .stopwatch-inner{
+    pointer-events: auto;
+    width: 100%;
+    max-width: 700px; /* match .container max-width */
+    margin: 0 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    background: rgba(0,0,0,0.03);
+    backdrop-filter: blur(4px);
+    color: var(--text);
+    padding: 8px 12px;
+    /* intentionally no border */
+    box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+  }
+  /* layout stabilizers to avoid shifting when button text changes */
+  .sw-label { flex: 0 0 auto; font-size: 0.95rem; color: var(--text); }
+  .sw-time{ font-weight: 700; flex: 1 1 auto; text-align: center; min-width: 56px; }
+  .sw-controls{ display:flex; gap:8px; flex: 0 0 auto; }
+  .sw-btn{
+    -webkit-appearance: none; appearance: none;
+    border: none; /* no border on buttons to match look */
+    background: transparent;
+    color: var(--text);
+    padding: 6px 10px;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    cursor: pointer;
+    min-width: 64px; /* reserve width so 'Start'->'Pause' doesn't shift layout */
+    text-align: center;
+  }
+  /* visually-hidden helper for accessible labels */
+  .visually-hidden{ position: absolute !important; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+  .sw-icon-btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; }
+  .sw-icon-btn .icon{ width: 18px; height: 18px; display: block; }
+  /* show play icon when not pressed; show pause when pressed */
+  .sw-icon-btn .icon-pause{ display: none; }
+  .sw-icon-btn[aria-pressed="true"] .icon-pause{ display: block; }
+  .sw-icon-btn[aria-pressed="true"] .icon-play{ display: none; }
+  .sw-btn[aria-pressed="true"]{ background: var(--accent); color: var(--accent-foreground); border-color: var(--accent); }
+  .sw-btn:focus-visible{ outline: 3px solid var(--muted); outline-offset: 3px; }
+
+  /* Hide stopwatch by default; JS will show it for supported sections */
+  .stopwatch{ display: none; }
 
   .tabbar .tabbtn {
     background: transparent;

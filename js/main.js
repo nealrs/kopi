@@ -180,9 +180,10 @@
       });
     }
 
-    // Initialize mobile tab UI and iced toggle
+    // Initialize mobile tab UI, iced toggle, and stopwatch
     initTabs();
     initIcedToggle();
+    initStopwatch();
   });
 
   // Re-acquire wake lock when returning to the page if recipe mode was enabled
@@ -197,6 +198,8 @@
 
   // --- Mobile tab UI functions ---
   function activateTab(name){
+    // Ensure stopwatch does not persist across tabs: pause & reset before switching
+    try{ resetStopwatch(); } catch(e){ /* ignore */ }
     const sections = document.querySelectorAll('.tab-section');
     sections.forEach(s => {
       if (s.dataset.tab === name) s.classList.add('active'); else s.classList.remove('active');
@@ -216,6 +219,8 @@
     // focus a logical control for keyboard users
     const target = document.querySelector(`.tab-section[data-tab="${name}"]`);
     if (target) focusFirstIn(target);
+    // Show or hide stopwatch depending on active section
+    try{ showStopwatchFor(name); } catch(e){ /* ignore */ }
   }
 
   function runSectionInit(name){
@@ -249,6 +254,7 @@
       if (icedNoteEl) icedNoteEl.textContent = '(pourover)';
       buttons.forEach(b => b.setAttribute('aria-pressed', b.dataset.iced === 'pourover' ? 'true' : 'false'));
       try{ localStorage.setItem('kopi.icedMethod','pourover'); } catch(e){/* ignore */}
+      try{ showStopwatchFor('iced'); } catch(e){/* ignore */}
     };
     const showDrip = () => {
       icedSection.classList.add('iced--drip');
@@ -257,6 +263,7 @@
       if (icedNoteEl) icedNoteEl.textContent = '(drip)';
       buttons.forEach(b => b.setAttribute('aria-pressed', b.dataset.iced === 'drip' ? 'true' : 'false'));
       try{ localStorage.setItem('kopi.icedMethod','drip'); } catch(e){/* ignore */}
+      try{ showStopwatchFor('iced'); } catch(e){/* ignore */}
     };
 
     buttons.forEach(btn => {
@@ -309,5 +316,93 @@
     const initial = saved || hash || 'v60';
     // Activate initial without animation
     activateTab(initial);
+  }
+
+  // --- Stopwatch implementation (non-persistent) ---
+  let sw_interval = null;
+  let sw_seconds = 0;
+  const SW_MAX = 15 * 60; // 15 minutes in seconds
+
+  function formatTime(sec){
+    const s = Math.max(0, Math.min(SW_MAX, Math.floor(sec)));
+    const mm = String(Math.floor(s/60)).padStart(2,'0');
+    const ss = String(s % 60).padStart(2,'0');
+    return `${mm}:${ss}`;
+  }
+
+  function updateSwDisplay(){
+    const el = document.getElementById('sw_time');
+    if (el) el.textContent = formatTime(sw_seconds);
+  }
+
+  function swTick(){
+    if (sw_seconds >= SW_MAX){
+      clearInterval(sw_interval); sw_interval = null;
+      // ensure show max
+      sw_seconds = SW_MAX;
+      updateSwDisplay();
+      const startBtn = document.getElementById('sw_start');
+      if (startBtn) startBtn.setAttribute('aria-pressed','false');
+      return;
+    }
+    sw_seconds += 1;
+    updateSwDisplay();
+  }
+
+  function startStopwatch(){
+    if (sw_interval) return; // already running
+    sw_interval = setInterval(swTick, 1000);
+    const startBtn = document.getElementById('sw_start');
+    if (startBtn) startBtn.setAttribute('aria-pressed','true');
+    if (startBtn) startBtn.setAttribute('aria-label','Pause timer');
+    startBtn.textContent = 'Pause';
+
+    // Enable recipe/wake mode automatically when timer starts
+    try{
+      const wakeBtn = document.getElementById('wake_btn');
+      const isOn = wakeBtn && wakeBtn.getAttribute && wakeBtn.getAttribute('aria-pressed') === 'true';
+      if (!isOn && typeof setRecipeMode === 'function') setRecipeMode(true).catch(()=>{});
+    } catch(e){ /* ignore */ }
+  }
+
+  function pauseStopwatch(){
+    if (sw_interval) { clearInterval(sw_interval); sw_interval = null; }
+    const startBtn = document.getElementById('sw_start');
+    startBtn.textContent = 'Start';
+    if (startBtn) startBtn.setAttribute('aria-pressed','false');
+    if (startBtn) startBtn.setAttribute('aria-label','Start timer');
+  }
+
+  function resetStopwatch(){
+    pauseStopwatch();
+    sw_seconds = 0;
+    updateSwDisplay();
+  }
+
+  function initStopwatch(){
+    const startBtn = document.getElementById('sw_start');
+    const resetBtn = document.getElementById('sw_reset');
+    updateSwDisplay();
+    if (startBtn) startBtn.addEventListener('click', () => {
+      const running = startBtn.getAttribute('aria-pressed') === 'true';
+      if (running) pauseStopwatch(); else startStopwatch();
+    });
+    if (resetBtn) resetBtn.addEventListener('click', () => { resetStopwatch(); });
+  }
+
+  // Show stopwatch only for v60, aero, and iced pourover (iced when pourover mode selected)
+  function showStopwatchFor(name){
+    const wrap = document.getElementById('stopwatch');
+    if (!wrap) return;
+    // if not mobile viewport, keep hidden (CSS controls display)
+    // Show for aero and v60 always; for iced only when iced--pourover class is present
+    let should = false;
+    if (name === 'v60' || name === 'aero') should = true;
+    if (name === 'iced'){
+      const icedSection = document.getElementById('iced');
+      if (icedSection && icedSection.classList.contains('iced--pourover')) should = true;
+    }
+    if (should){ wrap.style.display = 'flex'; wrap.setAttribute('aria-hidden','false'); }
+    else { wrap.style.display = 'none'; wrap.setAttribute('aria-hidden','true'); resetStopwatch(); }
   }
 
