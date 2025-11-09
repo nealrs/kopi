@@ -322,6 +322,7 @@ li{
   #wake {
     display: none;
   }
+  .hide-desktop { display: none; }
 }
 
 /* Mobile tabbed UI: show tabbar and hide non-active sections */
